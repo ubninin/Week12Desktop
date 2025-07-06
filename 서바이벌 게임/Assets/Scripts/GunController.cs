@@ -80,31 +80,45 @@ public class GunController : MonoBehaviour
     }
     IEnumerator ReloadCoroutine()
     {
+        if (currentGun.anim == null)
+        {
+            Debug.LogError(" currentGun.anim is null! Animator not assigned!");
+        }
+        else
+        {
+            Debug.Log("Animator assigned. Triggering Reload");
+            currentGun.anim.SetTrigger("Reload");
+        }
+
         if (currentGun.carryBulletCount > 0)
         {
             isReload = true;
             currentGun.anim.SetTrigger("Reload");
-            currentGun.carryBulletCount += currentGun.reloadBulletCount;
-            currentGun.currentBulletCount = 0;
 
             yield return new WaitForSeconds(currentGun.reloadTime);
-            if (currentGun.carryBulletCount >= currentGun.reloadBulletCount)
+
+            int bulletToReload = currentGun.reloadBulletCount - currentGun.currentBulletCount;
+
+            // 실제 장전 가능한 탄 수 계산
+            if (currentGun.carryBulletCount >= bulletToReload)
             {
-                currentGun.currentBulletCount = currentGun.reloadBulletCount;
-                currentGun.carryBulletCount -= currentGun.reloadBulletCount;
+                currentGun.carryBulletCount -= bulletToReload;
+                currentGun.currentBulletCount += bulletToReload;
             }
             else
             {
-                currentGun.currentBulletCount = currentGun.carryBulletCount;
+                currentGun.currentBulletCount += currentGun.carryBulletCount;
                 currentGun.carryBulletCount = 0;
             }
+
             isReload = false;
         }
         else
         {
-            Debug.Log("no b");
+            Debug.Log("no bullets to reload");
         }
     }
+
     private void TryFineSight()
     {
         if (Input.GetButtonDown("Fire2")&& !isReload )

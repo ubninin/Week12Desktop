@@ -256,6 +256,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &116378938 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 58fb848cc9715274181705367e0c6254, type: 3}
+  m_PrefabInstance: {fileID: 280128392}
+  m_PrefabAsset: {fileID: 0}
+--- !u!135 &116378941
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 116378938}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.0061572837
+  m_Center: {x: 0.000085794134, y: 0.003305538, z: -0.00031321566}
 --- !u!1 &177131632
 GameObject:
   m_ObjectHideFlags: 0
@@ -11475,6 +11493,24 @@ Transform:
   m_Father: {fileID: 90453669}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2039286649 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e894c19227b8e4940b87d9a5cafe99b6, type: 3}
+  m_PrefabInstance: {fileID: 384192377}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &2039286652
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2039286649}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.01986352, y: 0.0015864557, z: 0.0198}
+  m_Center: {x: -0.000017158221, y: 0.0007670897, z: 0.0000000013969839}
 --- !u!4 &2124510604 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8de6029884e8fab4c97f981af65ec9f7, type: 3}
@@ -11579,13 +11615,13 @@ MonoBehaviour:
   gunName: SubMachineGun1
   range: 100
   accuracy: 0
-  fireRate: 0.2
+  fireRate: 0.1
   reloadTime: 2
   damage: 30
-  reloadBulletCount: 10
-  currentBulletCount: 10
+  reloadBulletCount: 30
+  currentBulletCount: 30
   maxBulletCount: 0
-  carryBulletCount: 23
+  carryBulletCount: 150
   retroActionForce: 0.3
   retroActionFineSightForce: 0.7
   fineSightOriginPos: {x: 0.55, y: 0.335, z: -0.557}
@@ -11622,6 +11658,7 @@ GameObject:
   - component: {fileID: 8966787360205464225}
   - component: {fileID: 7513546071517017487}
   - component: {fileID: 2348053108465013001}
+  - component: {fileID: 375517913998665667}
   m_Layer: 0
   m_Name: Tree
   m_TagString: Untagged
@@ -11629,6 +11666,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!136 &375517913998665667
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375517913998665666}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.01
+  m_Height: 0.09000325
+  m_Direction: 1
+  m_Center: {x: -0.00032764208, y: 0.02, z: 0.0012815446}
 --- !u!23 &377066397569476969
 MeshRenderer:
   m_ObjectHideFlags: 0
