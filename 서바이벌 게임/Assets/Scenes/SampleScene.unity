@@ -944,6 +944,7 @@ GameObject:
   - component: {fileID: 442572077}
   - component: {fileID: 442572078}
   - component: {fileID: 442572080}
+  - component: {fileID: 442572081}
   - component: {fileID: 442572079}
   m_Layer: 2
   m_Name: Holder
@@ -1115,6 +1116,22 @@ MonoBehaviour:
   - {fileID: 7548391494671996789}
   theGunController: {fileID: 442572078}
   theHandController: {fileID: 442572077}
+--- !u!114 &442572081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 442572075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c52b71084b43fff438168c4105a6e4de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  limitPos: {x: 0.18, y: 0.1, z: 0}
+  fineSightLimitPos: {x: 0.05, y: 0.005, z: 0}
+  smoothSway: {x: 0.05, y: 0.03, z: 0}
+  theGunController: {fileID: 0}
 --- !u!1 &442613384
 GameObject:
   m_ObjectHideFlags: 0
