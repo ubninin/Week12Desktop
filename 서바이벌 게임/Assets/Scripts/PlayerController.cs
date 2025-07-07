@@ -60,9 +60,13 @@ public class PlayerController : MonoBehaviour
         TryRun();
         TryCrouch();
         Move();
-        MoveCheck();
+        
         CameraRotation();
         CharacterRotation();
+    }
+    void FixedUpdate()
+    {
+        MoveCheck();
     }
     private void TryCrouch()
     {
