@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GunController : MonoBehaviour
 {
-    public static bool isActive = true;
+    public static bool isActivate = true;
     // 현재 장착된 총
     [SerializeField] private Gun currentGun;
     //연사속도
@@ -37,7 +37,7 @@ public class GunController : MonoBehaviour
 
     void Update()
     {
-        if (isActive)
+        if (isActivate)
         {
             GunFireRateCalc();
             TryFire();
@@ -267,6 +267,6 @@ public class GunController : MonoBehaviour
         WeaponManager.currentWeaponAnim = currentGun.anim;
         currentGun.transform.localPosition = Vector3.zero;
         currentGun.gameObject.SetActive(true);
-        isActive = true;
+        isActivate = true;
     }
 }

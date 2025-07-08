@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HandController : CloseWeaponController
+public class AxeController : CloseWeaponController
 {
-    
     public static bool isActivate = false;
 
     void Update()
@@ -12,7 +11,6 @@ public class HandController : CloseWeaponController
         if (isActivate)
             TryAttack();
     }
-
     protected override IEnumerator HitCoroutine()
     {
         while (isSwing)

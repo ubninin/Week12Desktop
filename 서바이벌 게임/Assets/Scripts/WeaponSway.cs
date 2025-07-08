@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class WeaponSway : MonoBehaviour
 {
+
     // 기존 위치.
     private Vector3 originPos;
 
@@ -18,24 +19,29 @@ public class WeaponSway : MonoBehaviour
     [SerializeField]
     private Vector3 fineSightLimitPos;
 
+
     // 부드러운 움직임 정도.
     [SerializeField]
     private Vector3 smoothSway;
 
-    // 필요한 컴포넌트
+
+    // 필요한 컴포넌트/
     [SerializeField]
     private GunController theGunController;
 
-   
+
+    // Use this for initialization
     void Start()
     {
         originPos = this.transform.localPosition;
     }
 
+    // Update is called once per frame
     void Update()
     {
         TrySway();
     }
+
 
     private void TrySway()
     {
@@ -44,25 +50,36 @@ public class WeaponSway : MonoBehaviour
         else
             BackToOriginPos();
     }
+
     private void Swaying()
     {
-        float _moveX = Input.GetAxisRaw("Mouse X");
-        float _moveY = Input.GetAxisRaw("Mouse Y");
+        float moveX = Input.GetAxis("Mouse X");
+        float moveY = Input.GetAxis("Mouse Y");
+
+        Vector3 targetOffset;
 
         if (!theGunController.isFineSightMode)
         {
-            currentPos.Set(Mathf.Clamp(Mathf.Lerp(currentPos.x, -_moveX, smoothSway.x), -limitPos.x, limitPos.x),
-               Mathf.Clamp(Mathf.Lerp(currentPos.y, -_moveY, smoothSway.x), -limitPos.y, limitPos.y),
-               originPos.z);
+            targetOffset = new Vector3(
+                Mathf.Clamp(-moveX, -limitPos.x, limitPos.x),
+                Mathf.Clamp(-moveY, -limitPos.y, limitPos.y),
+                0f
+            );
         }
         else
         {
-            currentPos.Set(Mathf.Clamp(Mathf.Lerp(currentPos.x, -_moveX, smoothSway.y), -fineSightLimitPos .x, fineSightLimitPos.x),
-               Mathf.Clamp(Mathf.Lerp(currentPos.y, -_moveY, smoothSway.y), -fineSightLimitPos.y, fineSightLimitPos.y),
-               originPos.z);
+            targetOffset = new Vector3(
+                Mathf.Clamp(-moveX, -fineSightLimitPos.x, fineSightLimitPos.x),
+                Mathf.Clamp(-moveY, -fineSightLimitPos.y, fineSightLimitPos.y),
+                0f
+            );
         }
+
+        currentPos = Vector3.Lerp(currentPos, originPos + targetOffset, Time.deltaTime * smoothSway.x);
         transform.localPosition = currentPos;
     }
+
+
     private void BackToOriginPos()
     {
         currentPos = Vector3.Lerp(currentPos, originPos, smoothSway.x);
