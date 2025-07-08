@@ -11,6 +11,10 @@ public abstract class CloseWeaponController : MonoBehaviour
     protected bool isSwing = false;
     protected RaycastHit hitInfo;
 
+    [SerializeField]
+    private Camera theCam;
+    private Crosshair theCrosshair;
+
     protected void TryAttack()
     {
         if (Input.GetButton("Fire1"))
@@ -48,12 +52,16 @@ public abstract class CloseWeaponController : MonoBehaviour
 
     protected bool CheckObject()
     {
-        if (Physics.Raycast(transform.position, transform.forward, out hitInfo, currentCloseWeapon.range))
+
+
+        if (Physics.Raycast(theCam.transform.position, theCam.transform.forward, out hitInfo, currentCloseWeapon.range))
         {
             return true;
         }
         return false;
     }
+
+
 
     // 추가 편집 가능(가상함수)
     public virtual void CloseWeaponChange(CloseWeapon _closeWeapon)

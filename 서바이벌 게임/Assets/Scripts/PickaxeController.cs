@@ -5,7 +5,7 @@ using UnityEngine;
 public class PickaxeController : CloseWeaponController
 {
 
-    // 활성화 여부.
+    // 활성화 여부
     public static bool isActivate = false;
 
     private void Start()
@@ -14,7 +14,6 @@ public class PickaxeController : CloseWeaponController
         WeaponManager.currentWeaponAnim = currentCloseWeapon.anim;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (isActivate)
@@ -27,8 +26,17 @@ public class PickaxeController : CloseWeaponController
         {
             if (CheckObject())
             {
+                Rock rock = hitInfo.collider.GetComponentInParent<Rock>();
+                if (rock != null)
+                {
+                    rock.Mining();
+                }
+                else
+                {
+                    Debug.LogWarning("Rock 컴포넌트를 찾지 못했습니다: " + hitInfo.transform.name);
+                }
                 isSwing = false;
-                Debug.Log(hitInfo.transform.name);
+                Debug.Log("히트 오브젝트: " + hitInfo.transform.name + " / 태그: " + hitInfo.transform.tag);
             }
             yield return null;
         }

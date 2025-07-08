@@ -6,26 +6,26 @@ using UnityEngine;
 public class WeaponManager : MonoBehaviour
 {
 
-    // 무기 중복 교체 실행 방지.
+    // 무기 중복 교체 실행 방지
     public static bool isChangeWeapon = false;
 
-    // 현재 무기와 현재 무기의 애니메이션.
+    // 현재 무기와 현재 무기의 애니메이션
     public static Transform currentWeapon;
     public static Animator currentWeaponAnim;
 
-    // 현재 무기의 타입.
+    // 현재 무기 타입
     [SerializeField]
     private string currentWeaponType;
 
 
-    // 무기 교체 딜레이, 무기 교체가 완전히 끝난 시점.
+    // 무기 교체 딜레이, 무기 교체가 완전히 끝난 시점
     [SerializeField]
     private float changeWeaponDelayTime;
     [SerializeField]
     private float changeWeaponEndDelayTime;
 
 
-    // 무기 종류들 전부 관리.
+    // 무기 종류
     [SerializeField]
     private Gun[] guns;
     [SerializeField]
@@ -35,13 +35,13 @@ public class WeaponManager : MonoBehaviour
     [SerializeField]
     private CloseWeapon[] pickaxes;
 
-    // 관리 차원에서 쉽게 무기 접근이 가능하도록 만듦.
+    // 무기 접근 딕셔너리
     private Dictionary<string, Gun> gunDictionary = new Dictionary<string, Gun>();
     private Dictionary<string, CloseWeapon> handDictionary = new Dictionary<string, CloseWeapon>();
     private Dictionary<string, CloseWeapon> axeDictionary = new Dictionary<string, CloseWeapon>();
     private Dictionary<string, CloseWeapon> pickaxeDictionary = new Dictionary<string, CloseWeapon>();
 
-    // 필요한 컴포넌트.
+    // 필요한 컴포넌트
     [SerializeField]
     private GunController theGunController;
     [SerializeField]
@@ -51,7 +51,6 @@ public class WeaponManager : MonoBehaviour
     [SerializeField]
     private PickaxeController thePickaxeController;
 
-    // Use this for initialization
     void Start()
     {
         for (int i = 0; i < guns.Length; i++)
@@ -72,7 +71,7 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
+   
     void Update()
     {
 
@@ -89,7 +88,7 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
-    // 무기 교체 코루틴.
+    // 무기 교체 코루틴
     public IEnumerator ChangeWeaponCoroutine(string _type, string _name)
     {
         isChangeWeapon = true;
@@ -106,7 +105,7 @@ public class WeaponManager : MonoBehaviour
         isChangeWeapon = false;
     }
 
-    // 무기 취소 함수.
+    // 무기 취소
     private void CancelPreWeaponAction()
     {
         switch (currentWeaponType)
@@ -128,7 +127,7 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
-    // 무기 교체 함수.
+    // 무기 교체
     private void WeaponChange(string _type, string _name)
     {
         if (_type == "GUN")
