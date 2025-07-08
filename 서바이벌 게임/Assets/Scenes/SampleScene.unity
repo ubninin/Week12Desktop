@@ -1002,7 +1002,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentCloseWeapon: {fileID: 7548391494671996789}
-  theCam: {fileID: 0}
+  theCam: {fileID: 963194227}
 --- !u!114 &442572078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1172,7 +1172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentCloseWeapon: {fileID: 3172286154533529563}
-  theCam: {fileID: 0}
+  theCam: {fileID: 963194227}
 --- !u!114 &442572083
 MonoBehaviour:
   m_ObjectHideFlags: 0

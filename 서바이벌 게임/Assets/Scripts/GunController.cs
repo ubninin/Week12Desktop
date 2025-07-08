@@ -99,11 +99,11 @@ public class GunController : MonoBehaviour
     {
         if (currentGun.anim == null)
         {
-            Debug.LogError(" currentGun.anim is null! Animator not assigned!");
+            Debug.LogError("애니메이터 없음");
         }
         else
         {
-            Debug.Log("Animator assigned. Triggering Reload");
+        
             currentGun.anim.SetTrigger("Reload");
         }
 
@@ -132,7 +132,7 @@ public class GunController : MonoBehaviour
         }
         else
         {
-            Debug.Log("no bullets to reload");
+            Debug.Log("총알없음");
         }
     }
 
