@@ -9,18 +9,21 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDra
 
     public Item item; 
     public int itemCount; 
-    public Image itemImage;
+    public Image itemImage; 
 
     [SerializeField]
     private Text text_Count;
     [SerializeField]
     private GameObject go_CountImage;
 
-    private WeaponManager theWeaponManager;
+    private ItemEffectDatabase theItemEffectDatabase;
+    private Rect baseRect;
+
 
     void Start()
     {
-        theWeaponManager = FindFirstObjectByType<WeaponManager>();
+        theItemEffectDatabase = FindFirstObjectByType<ItemEffectDatabase>();
+        baseRect = transform.parent.parent.GetComponent<RectTransform>().rect;
     }
 
     private void SetColor(float _alpha)
@@ -50,6 +53,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDra
         SetColor(1);
     }
 
+
     public void SetSlotCount(int _count)
     {
         itemCount += _count;
@@ -58,6 +62,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDra
         if (itemCount <= 0)
             ClearSlot();
     }
+
 
     private void ClearSlot()
     {
@@ -76,15 +81,10 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDra
         {
             if (item != null)
             {
-                if (item.itemType == Item.ItemType.Equipment)
-                {
-                    StartCoroutine(theWeaponManager.ChangeWeaponCoroutine(item.weaponType, item.itemName));
-                }
-                else
-                {
-                    Debug.Log(item.itemName + " 을 사용했습니다");
+                theItemEffectDatabase.UseItem(item);
+
+                if (item.itemType == Item.ItemType.Used)
                     SetSlotCount(-1);
-                }
             }
         }
     }
@@ -133,4 +133,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDra
         else
             DragSlot.instance.dragSlot.ClearSlot();
     }
+
+
+
 }

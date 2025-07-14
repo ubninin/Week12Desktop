@@ -132,7 +132,18 @@ public class StatusController : MonoBehaviour
         if (currentHp <= 0)
             Debug.Log("hp 0");
     }
+    public void IncreaseSP(int _count)
+    {
+        currentSp = Mathf.Min(currentSp + _count, sp);
+    }
 
+    public void DecreaseSP(int _count)
+    {
+        currentSp -= _count;
+
+        if (currentSp <= 0)
+            Debug.Log("sp 0");
+    }
     public void IncreaseDP(int _count)
     {
         currentDp = Mathf.Min(currentDp + _count, dp);

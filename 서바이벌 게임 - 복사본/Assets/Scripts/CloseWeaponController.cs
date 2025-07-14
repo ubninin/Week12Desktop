@@ -4,7 +4,6 @@ using UnityEngine;
 
 public abstract class CloseWeaponController : MonoBehaviour
 {
-
     [SerializeField]
     protected CloseWeapon currentCloseWeapon;
 
@@ -13,6 +12,9 @@ public abstract class CloseWeaponController : MonoBehaviour
 
     protected RaycastHit hitInfo;
 
+
+    [SerializeField]
+    private Camera theCam;
 
     protected void TryAttack()
     {
@@ -26,8 +28,6 @@ public abstract class CloseWeaponController : MonoBehaviour
                 }
             }
         }
-
-
     }
 
     protected IEnumerator AttackCoroutine()
@@ -43,25 +43,22 @@ public abstract class CloseWeaponController : MonoBehaviour
         yield return new WaitForSeconds(currentCloseWeapon.attackDelayB);
         isSwing = false;
 
-
         yield return new WaitForSeconds(currentCloseWeapon.attackDelay - currentCloseWeapon.attackDelayA - currentCloseWeapon.attackDelayB);
         isAttack = false;
     }
-
 
     protected abstract IEnumerator HitCoroutine();
 
 
     protected bool CheckObject()
     {
-        if (Physics.Raycast(transform.position, transform.forward, out hitInfo, currentCloseWeapon.range))
+        if (Physics.Raycast(theCam.transform.position, theCam.transform.forward, out hitInfo, currentCloseWeapon.range))
         {
             return true;
         }
         return false;
     }
 
-  
     public virtual void CloseWeaponChange(CloseWeapon _closeWeapon)
     {
         if (WeaponManager.currentWeapon != null)
