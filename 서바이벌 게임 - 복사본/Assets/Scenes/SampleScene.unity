@@ -2843,7 +2843,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 933461374104435672, guid: 9ff9061b52d80b640b25f6cf5b613465, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2039070841}
   m_SourcePrefab: {fileID: 100100000, guid: 9ff9061b52d80b640b25f6cf5b613465, type: 3}
 --- !u!1001 &824182033
 PrefabInstance:
@@ -3634,6 +3637,11 @@ MonoBehaviour:
     m_Bits: 256
   actionText: {fileID: 1680057454}
   theInventory: {fileID: 979998344}
+--- !u!1 &976666217 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 933461374104435672, guid: 9ff9061b52d80b640b25f6cf5b613465, type: 3}
+  m_PrefabInstance: {fileID: 810734360}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &979998342
 GameObject:
   m_ObjectHideFlags: 0
@@ -10079,7 +10087,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 933461374104435672, guid: 9ff9061b52d80b640b25f6cf5b613465, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1292849645}
   m_SourcePrefab: {fileID: 100100000, guid: 9ff9061b52d80b640b25f6cf5b613465, type: 3}
 --- !u!4 &1258248066 stripped
 Transform:
@@ -10242,6 +10253,31 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3350734869797861272, guid: e2832713a65699645b961eed0e519d36, type: 3}
   m_PrefabInstance: {fileID: 1275659703}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1292849641 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 933461374104435672, guid: 9ff9061b52d80b640b25f6cf5b613465, type: 3}
+  m_PrefabInstance: {fileID: 1203958015}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1292849645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1292849641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 1
+  m_Area: 1
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1341935664
 GameObject:
   m_ObjectHideFlags: 0
@@ -15147,6 +15183,8 @@ GameObject:
   - component: {fileID: 1350063510}
   - component: {fileID: 1350063515}
   - component: {fileID: 1350063514}
+  - component: {fileID: 1350063517}
+  - component: {fileID: 1350063516}
   m_Layer: 0
   m_Name: Pig
   m_TagString: WeakAnimal
@@ -15170,7 +15208,6 @@ MonoBehaviour:
   hp: 2
   walkSpeed: 1
   runSpeed: 4
-  turningSpeed: 0.01
   walkTime: 5
   waitTime: 4
   runTime: 3
@@ -15370,6 +15407,60 @@ MonoBehaviour:
   targetMask:
     serializedVersion: 2
     m_Bits: 512
+--- !u!114 &1350063516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1350063509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.06666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 1475c073ae14f7f499dbd83679701dff, type: 2}
+  m_BuildHeightMesh: 0
+--- !u!195 &1350063517
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1350063509}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.2
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 0.4
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &1369063899
 GameObject:
   m_ObjectHideFlags: 0
@@ -17026,6 +17117,26 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 933461374104435678, guid: 9ff9061b52d80b640b25f6cf5b613465, type: 3}
   m_PrefabInstance: {fileID: 810734360}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2039070841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 976666217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 1
+  m_Area: 1
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &2039286649 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e894c19227b8e4940b87d9a5cafe99b6, type: 3}
@@ -17630,6 +17741,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 543450651679662683}
+  - component: {fileID: 919132147961460962}
   m_Layer: 0
   m_Name: normal_tree
   m_TagString: Untagged
@@ -17637,6 +17749,26 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &919132147961460962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132147961460961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 1
+  m_Area: 1
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &939392966752597805
 GameObject:
   m_ObjectHideFlags: 0
