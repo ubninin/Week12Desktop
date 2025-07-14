@@ -4,26 +4,30 @@ using UnityEngine;
 
 public abstract class CloseWeaponController : MonoBehaviour
 {
-    // 현재 장착
-    [SerializeField] protected CloseWeapon currentCloseWeapon;
+
+    [SerializeField]
+    protected CloseWeapon currentCloseWeapon;
 
     protected bool isAttack = false;
     protected bool isSwing = false;
+
     protected RaycastHit hitInfo;
 
-    [SerializeField]
-    private Camera theCam;
-    private Crosshair theCrosshair;
 
     protected void TryAttack()
     {
-        if (Input.GetButton("Fire1"))
+        if (!Inventory.inventoryActivated)
         {
-            if (!isAttack)
+            if (Input.GetButton("Fire1"))
             {
-                StartCoroutine(AttackCoroutine());
+                if (!isAttack)
+                {
+                    StartCoroutine(AttackCoroutine());
+                }
             }
         }
+
+
     }
 
     protected IEnumerator AttackCoroutine()
@@ -33,7 +37,6 @@ public abstract class CloseWeaponController : MonoBehaviour
 
         yield return new WaitForSeconds(currentCloseWeapon.attackDelayA);
         isSwing = true;
-
 
         StartCoroutine(HitCoroutine());
 
@@ -46,24 +49,19 @@ public abstract class CloseWeaponController : MonoBehaviour
     }
 
 
-    // 미완성 ( 추상함수)
     protected abstract IEnumerator HitCoroutine();
 
 
     protected bool CheckObject()
     {
-
-
-        if (Physics.Raycast(theCam.transform.position, theCam.transform.forward, out hitInfo, currentCloseWeapon.range))
+        if (Physics.Raycast(transform.position, transform.forward, out hitInfo, currentCloseWeapon.range))
         {
             return true;
         }
         return false;
     }
 
-
-
-    // 추가 편집 가능(가상함수)
+  
     public virtual void CloseWeaponChange(CloseWeapon _closeWeapon)
     {
         if (WeaponManager.currentWeapon != null)

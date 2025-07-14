@@ -6,10 +6,14 @@ public class Inventory : MonoBehaviour
 {
 
     public static bool inventoryActivated = false;
-    [SerializeField] private GameObject go_InventoryBase;
-    [SerializeField] private GameObject go_SlotsParent;
 
+
+    [SerializeField]
+    private GameObject go_InventoryBase;
+    [SerializeField]
+    private GameObject go_SlotsParent;
     private Slot[] slots;
+
 
     void Start()
     {
@@ -33,6 +37,7 @@ public class Inventory : MonoBehaviour
                 CloseInventory();
         }
     }
+
     private void OpenInventory()
     {
         go_InventoryBase.SetActive(true);
@@ -42,6 +47,7 @@ public class Inventory : MonoBehaviour
     {
         go_InventoryBase.SetActive(false);
     }
+
     public void AcquireItem(Item _item, int _count = 1)
     {
         if (Item.ItemType.Equipment != _item.itemType)

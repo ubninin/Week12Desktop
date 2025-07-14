@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float walkSpeed;
-    [SerializeField] private float runSpeed;
-    [SerializeField] private float crouchSpeed;
+
+    [SerializeField]
+    private float walkSpeed;
+    [SerializeField]
+    private float runSpeed;
+    [SerializeField]
+    private float crouchSpeed;
+
     private float applySpeed;
 
-    [SerializeField] private float jumpForce;
+    [SerializeField]
+    private float jumpForce;
+
 
     private bool isWalk = false;
     private bool isRun = false;
@@ -18,17 +25,24 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 lastPos;
 
-    [SerializeField] private float crouchPosY;
+
+    [SerializeField]
+    private float crouchPosY;
     private float originPosY;
     private float applyCrouchPosY;
 
     private CapsuleCollider capsuleCollider;
 
-    [SerializeField] private float lookSensitivity;
-    [SerializeField] private float cameraRotationLimit;
+
+    [SerializeField]
+    private float lookSensitivity;
+
+    [SerializeField]
+    private float cameraRotationLimit;
     private float currentCameraRotationX = 0;
 
-    [SerializeField] private Camera theCamera;
+    [SerializeField]
+    private Camera theCamera;
     private Rigidbody myRigid;
     private GunController theGunController;
     private Crosshair theCrosshair;
@@ -38,43 +52,60 @@ public class PlayerController : MonoBehaviour
     {
         capsuleCollider = GetComponent<CapsuleCollider>();
         myRigid = GetComponent<Rigidbody>();
-        theGunController = Object.FindFirstObjectByType<GunController>();
-        theCrosshair = Object.FindFirstObjectByType<Crosshair>();
-        theStatusController = Object.FindFirstObjectByType<StatusController>();
+        theGunController = FindFirstObjectByType<GunController>();
+        theCrosshair = FindFirstObjectByType<Crosshair>();
+        theStatusController = FindFirstObjectByType<StatusController>();
 
         applySpeed = walkSpeed;
         originPosY = theCamera.transform.localPosition.y;
         applyCrouchPosY = originPosY;
     }
-
     void Update()
     {
+
         IsGround();
         TryJump();
         TryRun();
         TryCrouch();
         Move();
         MoveCheck();
-        CameraRotation();
-        CharacterRotation();
+        if (!Inventory.inventoryActivated)
+        {
+            CameraRotation();
+            CharacterRotation();
+        }
     }
-
-    void TryCrouch()
+    private void TryCrouch()
     {
-        if (Input.GetKeyDown(KeyCode.LeftControl)) Crouch();
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            Crouch();
+        }
     }
 
-    void Crouch()
+    private void Crouch()
     {
         isCrouch = !isCrouch;
         theCrosshair.CrouchingAnimation(isCrouch);
-        applySpeed = isCrouch ? crouchSpeed : walkSpeed;
-        applyCrouchPosY = isCrouch ? crouchPosY : originPosY;
+
+        if (isCrouch)
+        {
+            applySpeed = crouchSpeed;
+            applyCrouchPosY = crouchPosY;
+        }
+        else
+        {
+            applySpeed = walkSpeed;
+            applyCrouchPosY = originPosY;
+        }
+
         StartCoroutine(CrouchCoroutine());
+
     }
 
     IEnumerator CrouchCoroutine()
     {
+
         float _posY = theCamera.transform.localPosition.y;
         int count = 0;
 
@@ -83,102 +114,135 @@ public class PlayerController : MonoBehaviour
             count++;
             _posY = Mathf.Lerp(_posY, applyCrouchPosY, 0.3f);
             theCamera.transform.localPosition = new Vector3(0, _posY, 0);
-            if (count > 15) break;
+            if (count > 15)
+                break;
             yield return null;
         }
         theCamera.transform.localPosition = new Vector3(0, applyCrouchPosY, 0f);
     }
 
-    void IsGround()
+    private void IsGround()
     {
         isGround = Physics.Raycast(transform.position, Vector3.down, capsuleCollider.bounds.extents.y + 0.1f);
         theCrosshair.JumpingAnimation(!isGround);
     }
 
-    void TryJump()
+
+    private void TryJump()
     {
         if (Input.GetKeyDown(KeyCode.Space) && isGround && theStatusController.GetCurrentSP() > 0)
+        {
             Jump();
+        }
     }
 
-    void Jump()
+    private void Jump()
     {
-        if (isCrouch) Crouch();
+
+        if (isCrouch)
+            Crouch();
         theStatusController.DecreaseStamina(100);
-        myRigid.linearVelocity = transform.up * jumpForce; // linearVelocity -> velocity·Î º¯°æ
+        myRigid.linearVelocity = transform.up * jumpForce;
     }
 
-    void TryRun()
-    {
-        bool sp = theStatusController.GetCurrentSP() > 0;
 
-        if (Input.GetKey(KeyCode.LeftShift) && sp) Running();
-        if (Input.GetKeyUp(KeyCode.LeftShift) || !sp) RunningCancel();
+    private void TryRun()
+    {
+        if (Input.GetKey(KeyCode.LeftShift) && theStatusController.GetCurrentSP() > 0)
+        {
+            Running();
+        }
+        if (Input.GetKeyUp(KeyCode.LeftShift) || theStatusController.GetCurrentSP() <= 0)
+        {
+            RunningCancel();
+        }
     }
 
-    void Running()
+
+
+    private void Running()
     {
-        if (isCrouch) Crouch();
+        if (isCrouch)
+            Crouch();
+
         theGunController.CancelFineSight();
+
         isRun = true;
-        theCrosshair.RunningAnimation(true);
+        theCrosshair.RunningAnimation(isRun);
         theStatusController.DecreaseStamina(10);
         applySpeed = runSpeed;
     }
 
-    void RunningCancel()
+
+    private void RunningCancel()
     {
         isRun = false;
-        theCrosshair.RunningAnimation(false);
+        theCrosshair.RunningAnimation(isRun);
         applySpeed = walkSpeed;
     }
 
-    void Move()
+    private void Move()
     {
-        float x = Input.GetAxisRaw("Horizontal");
-        float z = Input.GetAxisRaw("Vertical");
-        Vector3 dir = (transform.right * x + transform.forward * z).normalized;
-        myRigid.MovePosition(transform.position + dir * applySpeed * Time.deltaTime);
+        float _moveDirX = Input.GetAxisRaw("Horizontal");
+        float _moveDirZ = Input.GetAxisRaw("Vertical");
+
+        Vector3 _moveHorizontal = transform.right * _moveDirX;
+        Vector3 _moveVertical = transform.forward * _moveDirZ;
+
+        Vector3 _velocity = (_moveHorizontal + _moveVertical).normalized * applySpeed;
+
+        myRigid.MovePosition(transform.position + _velocity * Time.deltaTime);
     }
 
-    void MoveCheck()
+    private void MoveCheck()
     {
         if (!isRun && !isCrouch && isGround)
         {
-            isWalk = Vector3.Distance(lastPos, transform.position) >= 0.01f;
+            if (Vector3.Distance(lastPos, transform.position) >= 0.01f)
+                isWalk = true;
+            else
+                isWalk = false;
+
             theCrosshair.WalkingAnimation(isWalk);
             lastPos = transform.position;
         }
     }
 
-    void CharacterRotation()
+
+    private void CharacterRotation()
     {
-        float y = Input.GetAxisRaw("Mouse X");
-        Vector3 rotY = new Vector3(0f, y, 0f) * lookSensitivity;
-        myRigid.MoveRotation(myRigid.rotation * Quaternion.Euler(rotY));
+        float _yRotation = Input.GetAxisRaw("Mouse X");
+        Vector3 _characterRotationY = new Vector3(0f, _yRotation, 0f) * lookSensitivity;
+        myRigid.MoveRotation(myRigid.rotation * Quaternion.Euler(_characterRotationY));
     }
 
-    void CameraRotation()
+    private void CameraRotation()
     {
-        if (pauseCameraRotation) return;
-        float x = Input.GetAxisRaw("Mouse Y") * lookSensitivity;
-        currentCameraRotationX -= x;
-        currentCameraRotationX = Mathf.Clamp(currentCameraRotationX, -cameraRotationLimit, cameraRotationLimit);
-        theCamera.transform.localEulerAngles = new Vector3(currentCameraRotationX, 0f, 0f);
+        if (!pauseCameraRotation)
+        {
+            float _xRotation = Input.GetAxisRaw("Mouse Y");
+            float _cameraRotationX = _xRotation * lookSensitivity;
+            currentCameraRotationX -= _cameraRotationX;
+            currentCameraRotationX = Mathf.Clamp(currentCameraRotationX, -cameraRotationLimit, cameraRotationLimit);
+
+            theCamera.transform.localEulerAngles = new Vector3(currentCameraRotationX, 0f, 0f);
+        }
     }
 
     private bool pauseCameraRotation = false;
 
-    public IEnumerator TreeLookCoroutine(Vector3 target)
+    public IEnumerator TreeLookCoroutine(Vector3 _target)
     {
         pauseCameraRotation = true;
-        Quaternion dir = Quaternion.LookRotation(target - theCamera.transform.position);
-        float destX = dir.eulerAngles.x;
 
-        while (Mathf.Abs(destX - currentCameraRotationX) >= 0.5f)
+        Quaternion direction = Quaternion.LookRotation(_target - theCamera.transform.position);
+        Vector3 eulerValue = direction.eulerAngles;
+        float destinationX = eulerValue.x;
+
+        while (Mathf.Abs(destinationX - currentCameraRotationX) >= 0.5f)
         {
-            Vector3 euler = Quaternion.Lerp(theCamera.transform.localRotation, dir, 0.3f).eulerAngles;
-            theCamera.transform.localRotation = Quaternion.Euler(euler.x, 0f, 0f);
+            eulerValue = Quaternion.Lerp(theCamera.transform.localRotation, direction, 0.3f).eulerAngles;
+            theCamera.transform.localRotation = Quaternion.Euler(eulerValue.x, 0f, 0f);
             currentCameraRotationX = theCamera.transform.localEulerAngles.x;
             yield return null;
         }
@@ -186,8 +250,22 @@ public class PlayerController : MonoBehaviour
         pauseCameraRotation = false;
     }
 
-    public bool GetRun() => isRun;
-    public bool GetWalk() => isWalk;
-    public bool GetCrouch() => isCrouch;
-    public bool GetIsGround() => isGround;
+    public bool GetRun()
+    {
+        return isRun;
+    }
+    public bool GetWalk()
+    {
+        return isWalk;
+    }
+    public bool GetCrouch()
+    {
+        return isCrouch;
+    }
+    public bool GetIsGround()
+    {
+        return isGround;
+    }
 }
+
+
