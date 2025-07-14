@@ -2138,7 +2138,7 @@ GameObject:
   - component: {fileID: 530132341}
   - component: {fileID: 530132340}
   - component: {fileID: 530132339}
-  m_Layer: 2
+  m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15133,6 +15133,7 @@ GameObject:
   - component: {fileID: 1350063512}
   - component: {fileID: 1350063511}
   - component: {fileID: 1350063510}
+  - component: {fileID: 1350063515}
   - component: {fileID: 1350063514}
   m_Layer: 0
   m_Name: Pig
@@ -15339,6 +15340,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1350063515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1350063509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c878b87351d9fea41ac12d748dea152d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewAngle: 130
+  viewDistance: 10
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &1369063899
 GameObject:
   m_ObjectHideFlags: 0
