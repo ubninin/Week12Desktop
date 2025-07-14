@@ -27,7 +27,7 @@ public class Animal : MonoBehaviour
     [SerializeField] protected Rigidbody rigid;
     [SerializeField] protected BoxCollider boxCol;
     protected AudioSource theAudio;
-    protected NavMeshAgent nav;
+    [SerializeField] protected NavMeshAgent nav;
 
     [SerializeField] protected AudioClip[] sound_Normal;
     [SerializeField] protected AudioClip sound_Hurt;
