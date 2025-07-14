@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
-{
+public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler{
 
     public Item item; 
     public int itemCount; 
     public Image itemImage; 
+
 
     [SerializeField]
     private Text text_Count;
@@ -24,6 +24,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDra
     {
         theItemEffectDatabase = FindFirstObjectByType<ItemEffectDatabase>();
         baseRect = transform.parent.parent.GetComponent<RectTransform>().rect;
+
     }
 
     private void SetColor(float _alpha)
@@ -33,13 +34,14 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDra
         itemImage.color = color;
     }
 
+
     public void AddItem(Item _item, int _count = 1)
     {
         item = _item;
         itemCount = _count;
         itemImage.sprite = item.itemImage;
 
-        if (item.itemType != Item.ItemType.Equipment)
+        if(item.itemType != Item.ItemType.Equipment)
         {
             go_CountImage.SetActive(true);
             text_Count.text = itemCount.ToString();
@@ -53,7 +55,6 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDra
         SetColor(1);
     }
 
-
     public void SetSlotCount(int _count)
     {
         itemCount += _count;
@@ -62,7 +63,6 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDra
         if (itemCount <= 0)
             ClearSlot();
     }
-
 
     private void ClearSlot()
     {
@@ -77,13 +77,13 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDra
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Right)
+        if(eventData.button == PointerEventData.InputButton.Right)
         {
-            if (item != null)
+            if(item != null)
             {
                 theItemEffectDatabase.UseItem(item);
 
-                if (item.itemType == Item.ItemType.Used)
+                if(item.itemType == Item.ItemType.Used)
                     SetSlotCount(-1);
             }
         }
@@ -91,7 +91,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDra
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (item != null)
+        if(item != null)
         {
             DragSlot.instance.dragSlot = this;
             DragSlot.instance.DragSetImage(itemImage);
@@ -110,8 +110,13 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDra
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        DragSlot.instance.SetColor(0);
-        DragSlot.instance.dragSlot = null;
+        if(DragSlot.instance.transform.localPosition.x < baseRect.xMin || DragSlot.instance.transform.localPosition.x > baseRect.xMax
+           || DragSlot.instance.transform.localPosition.y < baseRect.yMin || DragSlot.instance.transform.localPosition.y > baseRect.yMax)
+        {
+
+            DragSlot.instance.SetColor(0);
+            DragSlot.instance.dragSlot = null;
+        }
     }
 
     public void OnDrop(PointerEventData eventData)
@@ -128,7 +133,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDra
 
         AddItem(DragSlot.instance.dragSlot.item, DragSlot.instance.dragSlot.itemCount);
 
-        if (_tempItem != null)
+        if(_tempItem != null)
             DragSlot.instance.dragSlot.AddItem(_tempItem, _tempItemCount);
         else
             DragSlot.instance.dragSlot.ClearSlot();
@@ -136,4 +141,15 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDra
 
 
 
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if(item != null)
+            theItemEffectDatabase.ShowToolTop(item, transform.position);
+    }
+
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        theItemEffectDatabase.HideToolTip();
+    }
 }

@@ -5,10 +5,10 @@ using UnityEngine;
 [System.Serializable]
 public class ItemEffect
 {
-    public string itemName; 
+    public string itemName; // 아이템의 이름. (키값)
     [Tooltip("HP, SP, DP, HUNGRY, THIRSTY , SATISFY만 가능합니다")]
-    public string[] part; 
-    public int[] num; 
+    public string[] part; // 부위.
+    public int[] num; // 수치.
 }
 
 public class ItemEffectDatabase : MonoBehaviour
@@ -21,9 +21,20 @@ public class ItemEffectDatabase : MonoBehaviour
     private StatusController thePlayerStatus;
     [SerializeField]
     private WeaponManager theWeaponManager;
-
+    [SerializeField]
+    private SlotToolTip theSlotToolTip;
 
     private const string HP = "HP", SP = "SP", DP = "DP", HUNGRY = "HUNGRY", THIRSTY = "THIRSTY", SATISFY = "SATISFY";
+
+    public void ShowToolTop(Item _item, Vector3 _pos)
+    {
+        theSlotToolTip.ShowToolTip(_item, _pos);
+    }
+
+    public void HideToolTip()
+    {
+        theSlotToolTip.HideToolTip();
+    }
 
     public void UseItem(Item _item)
     {
