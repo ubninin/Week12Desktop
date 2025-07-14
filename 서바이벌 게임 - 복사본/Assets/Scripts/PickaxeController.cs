@@ -26,17 +26,19 @@ public class PickaxeController : CloseWeaponController
         {
             if (CheckObject())
             {
-                Rock rock = hitInfo.collider.GetComponentInParent<Rock>();
-                if (rock != null)
+                if (hitInfo.transform.tag == "Rock")
+                    hitInfo.transform.GetComponent<Rock>().Mining();
+
+                else if (hitInfo.transform.tag == "NPC")
                 {
-                    rock.Mining();
+                    SoundManager.instance.PlaySE("Animal_Hit");
+                    hitInfo.transform.GetComponent<Pig>().Damage(1, transform.position);
                 }
-                else
-                {
-                    Debug.LogWarning("Rock 컴포넌트를 찾지 못했습니다: " + hitInfo.transform.name);
-                }
+
+
+
                 isSwing = false;
-                Debug.Log("히트 오브젝트: " + hitInfo.transform.name + " / 태그: " + hitInfo.transform.tag);
+                Debug.Log(hitInfo.transform.name);
             }
             yield return null;
         }
